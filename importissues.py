@@ -22,10 +22,10 @@ def log(s):
 
 def main(argv=None):
     config = ConfigParser.ConfigParser()
-    config.read(argv[0])
+    config.read(argv[1])
     
     
-    f = open(argv[1], 'r')
+    f = open(argv[2], 'r')
     lastidString = f.read()
     lastid = int(lastidString)
     f.close()
@@ -40,8 +40,8 @@ def main(argv=None):
      
     repository = gh.repository('Sage-Bionetworks', 'DigitalMammographyChallenge')
     
-    projectId=argv[2]
-    forumId=argv[3]
+    projectId=argv[3]
+    forumId=argv[4]
     offset=0
     limit=20
      
