@@ -1,2 +1,0 @@
-PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/lib/python2.7/site-packages
-* * * * * python /helloworld.py

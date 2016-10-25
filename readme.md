@@ -1,9 +1,12 @@
 
-docker build -t brucehoff/importissues .
+```
+python importissues.py config.ini lastThreadProcessed.txt syn4224222 79
 
-Copy last processed thread id to a file on the Docker Engine host
+```
 
-Copy config file to the Docker Engine host.  The contents should be
+Where:
+
+config.ini is a file of the form:
 ```
 [synapse]
 username: ...
@@ -13,6 +16,10 @@ apiKey: ...
 token: ...
 ```
 
-```
-docker run -d  -v ...:/config.ini:ro -v ...:/lastthreadid.txt:rw --name importissues brucehoff/importissues 
-```
+
+lastThreadProcessed.txt is a writable file containing the ID of the last thread previously processed;
+
+syn4224222 is the Synapse ID of the project to process
+
+79 is the ID of the forum object in the aforementioned project
+
