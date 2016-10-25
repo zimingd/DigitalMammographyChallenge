@@ -68,7 +68,7 @@ def main(argv=None):
         #now get the next batch
         offset = offset + limit
  
-    log("last thread ID processed: "+lastid)
+    log("last thread ID processed: "+str(lastid))
     
     return 0
 
