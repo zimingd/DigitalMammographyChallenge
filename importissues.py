@@ -10,6 +10,9 @@ import sys
 import os
 
 def main(argv=None):
+    f = open('/foo.txt', 'a')
+    f.write("some output\n")
+    f.close()
     
     f = open('/lastthreadid.txt', 'r')
     lastidString = f.read()
