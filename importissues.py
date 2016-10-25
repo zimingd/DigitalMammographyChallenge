@@ -30,7 +30,7 @@ def main(argv=None):
     lastid = int(lastidString)
     f.close()
      
-    log("last thread ID processed: "+lastid)
+    log("last thread ID processed: "+str(lastid))
      
     syn = synapseclient.Synapse()
      
