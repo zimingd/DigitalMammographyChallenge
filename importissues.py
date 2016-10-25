@@ -53,9 +53,6 @@ def main(argv=None):
             threadid=int(thread.get('id'))
             if threadid<=lastid:
                 continue
-            if threadid==1122 or threadid==1123:
-                # we made these while testing
-                continue
              
             repository.create_issue(title=thread.get('title'), body='https://www.synapse.org/#!Synapse:'+projectId+'/discussion/threadId='+str(thread.get('id')), labels=['discussion forum'])
              
