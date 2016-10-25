@@ -61,7 +61,7 @@ def main(argv=None):
              
             log("Created issue for "+thread.get('id')+" "+thread.get('title'))
             lastid=threadid
-            f = open('/lastthreadid.txt', 'w')
+            f = open(argv[2], 'w')
             f.write(str(lastid))
             f.close()
          
