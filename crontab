@@ -1,1 +1,2 @@
-* * * * * python /importissues.py
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+* * * * * echo "github_token: ${github_token} PATH: ${PATH}" >> /var/log/cron.log 2>&1

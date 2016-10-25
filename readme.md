@@ -1,13 +1,18 @@
 
 docker build -t brucehoff/importissues .
 
-Copy last processed thread id to a file on the Docker Engine host which is to run the container
+Copy last processed thread id to a file on the Docker Engine host
+
+Copy config file to the Docker Engine host.  The contents should be
+```
+[synapse]
+username: ...
+apiKey: ...
+
+[github]
+token: ...
+```
 
 ```
-docker run -d -e syn_user=... \
--e syn_apikey=... \
--e github_token=... \
--v ...:/lastthreadid.txt:rw \
---name importissues \
-brucehoff/importissues 
+docker run -d  -v ...:/config.ini -v ...:/lastthreadid.txt:rw --name importissues brucehoff/importissues 
 ```
