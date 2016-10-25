@@ -1,4 +1,11 @@
 
-docker build importissues .
+docker build -t brucehoff/importissues .
 
-docker run -e syn_user=${syn_user} -e syn_passwd=${syn_passwd} -e github_token=${github_token}-v <lastthreadit>:/lastthreadid.txt:rw importissues
+Copy last processed thread id to a file on the Docker Engine host which is to run the container
+
+docker run -e syn_user=... \
+-e syn_apikey=... \
+-e github_token=... \
+-v ...:/lastthreadid.txt:rw \
+brucehoff/importissues
+
