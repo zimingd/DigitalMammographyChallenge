@@ -6,5 +6,5 @@ COPY crontab /etc/cron.d/importissues-cron
 RUN chmod 644 /etc/cron.d/importissues-cron
 RUN /usr/bin/crontab /etc/cron.d/importissues-cron
 CMD cron -f
-RUN touch /error.log
 COPY importissues.py /importissues.py
+COPY helloworld.py /helloworld.py

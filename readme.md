@@ -14,5 +14,5 @@ token: ...
 ```
 
 ```
-docker run -d  -v ...:/config.ini -v ...:/lastthreadid.txt:rw --name importissues brucehoff/importissues 
+docker run -d  -v ...:/config.ini:ro -v ...:/lastthreadid.txt:rw --name importissues brucehoff/importissues 
 ```

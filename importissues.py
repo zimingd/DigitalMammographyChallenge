@@ -12,18 +12,15 @@ import traceback
 import ConfigParser
 
 def log(s):
-    f = open('/error.log', 'a')
-    f.write(s)
-    f.write('\n')
-    f.close()
+    print s
 
 def main(argv=None):
     try:
         config = ConfigParser.ConfigParser()
-        config.read("/config.ini")
+        config.read(argv[0])
         
         
-        f = open('/lastthreadid.txt', 'r')
+        f = open(argv[1], 'r')
         lastidString = f.read()
         lastid = int(lastidString)
         f.close()
@@ -37,14 +34,15 @@ def main(argv=None):
         gh = github3.login(token=config.get('github', 'token'))
          
         repository = gh.repository('Sage-Bionetworks', 'DigitalMammographyChallenge')
-         
-        projectId='syn4224222'
+        
+        projectId=argv[2]
+        forumId=argv[3]
         offset=0
         limit=20
          
         totalNumberOfResults = sys.maxint
         while offset<totalNumberOfResults:
-            threads=syn.restGET("/forum/79/threads?limit="+str(limit)+"&offset="+str(offset)+"&filter=EXCLUDE_DELETED&sort=PINNED_AND_LAST_ACTIVITY&ascending=true")
+            threads=syn.restGET("/forum/"+str(forumId)+"/threads?limit="+str(limit)+"&offset="+str(offset)+"&filter=EXCLUDE_DELETED&sort=PINNED_AND_LAST_ACTIVITY&ascending=true")
             totalNumberOfResults=int(threads.get('totalNumberOfResults'))
             for thread in threads.get('results'):
                 threadid=int(thread.get('id'))
@@ -76,5 +74,5 @@ def main(argv=None):
         return 1
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv))
     

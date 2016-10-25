@@ -1,2 +1,2 @@
-PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-* * * * * echo "github_token: ${github_token} PATH: ${PATH}" >> /var/log/cron.log 2>&1
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/lib/python2.7/site-packages
+* * * * * python /helloworld.py
