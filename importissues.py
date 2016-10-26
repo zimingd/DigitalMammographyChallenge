@@ -21,20 +21,6 @@ def log(s):
     print s
 
 def main(argv=None):
-    
-    lost=[907,
-    977,
-    1004,
-    1032,
-    1041,
-    1081,
-    1084,
-    1101,
-    1114,
-    1125,
-    1127,
-    1128]
-
     config = ConfigParser.ConfigParser()
     config.read(argv[1])
     
@@ -58,6 +44,8 @@ def main(argv=None):
     forumId=argv[4]
     offset=0
     limit=20
+    
+    maxNewId=lastid
      
     totalNumberOfResults = sys.maxint
     while offset<totalNumberOfResults:
@@ -65,22 +53,26 @@ def main(argv=None):
         totalNumberOfResults=int(threads.get('totalNumberOfResults'))
         for thread in threads.get('results'):
             threadid=int(thread.get('id'))
-            if threadid<=lastid and not threadid in lost:
+            if threadid<=lastid:
                 continue
+            
+            if threadid>maxNewId:
+                maxNewId=threadid
              
             repository.create_issue(title=thread.get('title'), body='https://www.synapse.org/#!Synapse:'+projectId+'/discussion/threadId='+str(thread.get('id')), labels=['discussion forum'])
              
             log("Created issue for "+thread.get('id')+" "+thread.get('title'))
             
-#             lastid=threadid
-#             f = open(argv[2], 'w')
-#             f.write(str(lastid))
-#             f.close()
-         
         #now get the next batch
         offset = offset + limit
  
-    log("last thread ID processed: "+str(lastid))
+    if maxNewId>lastid:
+        f = open(argv[2], 'w')
+        f.write(str(maxNewId))
+        f.write('\n')
+        f.close()
+         
+    log("last thread ID processed: "+str(maxNewId))
     
     return 0
 
