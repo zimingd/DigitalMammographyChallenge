@@ -77,7 +77,7 @@ def main(argv=None):
             if threadid<=lastid and not threadid in lost:
                 continue
              
-            # repository.create_issue(title=thread.get('title'), body='https://www.synapse.org/#!Synapse:'+projectId+'/discussion/threadId='+str(thread.get('id')), labels=['discussion forum'])
+            repository.create_issue(title=thread.get('title'), body='https://www.synapse.org/#!Synapse:'+projectId+'/discussion/threadId='+str(thread.get('id')), labels=['discussion forum'])
              
             log("Created issue for "+thread.get('id')+" "+thread.get('title'))
             
