@@ -11,9 +11,8 @@ docker rm ${DOCKER_MACHINE_NAME}-2-train
 
 docker pull brucehoff/challengedockeragent
 
-./dmagentprodXPRSS.sh train 1 ${SYNAPSE_USERNAME} ${SYNAPSE_PASSWORD} ${DOCKERHUB_USERNAME} ${DOCKERHUB_PASSWORD}
-
-./dmagentprodXPRSS.sh train 2 ${SYNAPSE_USERNAME} ${SYNAPSE_PASSWORD} ${DOCKERHUB_USERNAME} ${DOCKERHUB_PASSWORD}
+./dmagentprodXPRSS.sh train 1
+./dmagentprodXPRSS.sh train 2
 
 
 

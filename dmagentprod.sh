@@ -9,6 +9,8 @@
 # parameters are:
 # role (train or score)
 # agent index (1 or 2)
+#
+# The following are environment variables
 # synapse username
 # synapse password
 # dockerhub username
@@ -16,11 +18,6 @@
 #
 ROLE=$1
 AGENT_INDEX=$2
-SYNAPSE_USERNAME=$3
-SYNAPSE_PASSWORD=$4
-DOCKERHUB_USERNAME=$5
-DOCKERHUB_PASSWORD=$6
-
 
 # The following is specific to the agent (differentiating the agents running on a host)
 if [[ ${AGENT_INDEX} = 1 ]]; then
