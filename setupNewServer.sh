@@ -28,7 +28,11 @@ function errorExit() {
 
 trap errorExit INT
 
-SYSDIG_TAGS="dm.cloud:softlayer,dm.type:dryrun,dm.dataset:training"
+SYSDIG_TAGS="dm.cloud:softlayer,dm.type:challenge,dm.dataset:training"
+#SYSDIG_TAGS="dm.cloud:softlayer,dm.type:challenge,dm.dataset:leaderboard"
+
+#SYSDIG_TAGS="dm.cloud:softlayer,dm.type:expresslane,dm.dataset:training"
+#SYSDIG_TAGS="dm.cloud:softlayer,dm.type:expresslane,dm.dataset:scoring"
 
 # softlayer or amazon
 [ "$#" -ge 1 ] || errorExit "Cloud type missing (softlayer or amazon)"
@@ -48,15 +52,13 @@ else
 	errorExit "Machine address missing"
 fi
 
-: <<'END'
-
 # Install and configure Docker on the target machine
 rm -rf /home/ubuntu/.docker/machine/machines/${name}
 docker-machine create --driver generic --generic-ip-address=${address} --generic-ssh-key=/home/ubuntu/.ssh/id_rsa_docker-machine --generic-ssh-user=dreamuser ${name} || errorExit "docker-machine create failed."
 
 ssh ${name} sudo chmod 777 /etc/docker
-scp ~/.docker/machine/certs/key.pem ${name}:/etc/docker/
-scp ~/.docker/machine/certs/cert.pem ${name}:/etc/docker/
+scp ~/.docker/machine/certs/key.pem ${name}:/etc/docker/.
+scp ~/.docker/machine/certs/cert.pem ${name}:/etc/docker/.
 ssh ${name} sudo chmod 666 /etc/resolv.conf
 
 if [ $cloud == "softlayer" ]; then
@@ -64,10 +66,12 @@ if [ $cloud == "softlayer" ]; then
 	ssh ${name} sudo "printf \"nameserver 10.0.80.11\nnameserver 10.0.80.12\noptions single-request\n\" > /etc/resolv.conf"
 	ssh ${name} sudo "service network restart"
 	ssh ${name} sudo sysctl -w net.ipv4.ip_forward=1
+	sleep 60
 fi
 
 # Configure Docker to use a Logical Volume for its thinpool
 # https://github.com/Sage-Bionetworks/DigitalMammographyChallenge/issues/3#issuecomment-256758426
+: <<'END'
 if [ $cloud == "softlayer" ]; then
 	echo "Configuring Docker to use a Logical Volume for its data thinpool"
 	ssh ${name} sudo service docker stop
@@ -87,17 +91,16 @@ if [ $cloud == "softlayer" ]; then
 	ssh ${name} sudo systemctl daemon-reload
 	ssh ${name} sudo service docker restart || errorExit "Unable to configure docker to use a LV for its data thinpool."
 fi
+END
 
 # Install nvidia-docker
-ssh ${name} wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.0-rc.3/nvidia-docker-1.0.0.rc.3-1.x86_64.rpm
+ssh ${name} sudo wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.0-rc.3/nvidia-docker-1.0.0.rc.3-1.x86_64.rpm || errorExit "Unable to download nvidia-docker"
 ssh ${name} sudo rpm -i /tmp/nvidia-docker*.rpm && ssh ${name} rm /tmp/nvidia-docker*.rpm
 ssh ${name} sudo systemctl start nvidia-docker
 
 # Make sure docker and nvidia-docker run at startup
 ssh ${name} sudo chkconfig docker on
 ssh ${name} sudo chkconfig nvidia-docker on
-
-END
 
 # Set docker-machine to use this machine
 eval $(docker-machine env ${name})
