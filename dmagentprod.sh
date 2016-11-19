@@ -46,15 +46,15 @@ fi
 # It is OK to have multiple queues that map to the same role
 EVALUATION_ROLES=\{\"7213944\":\"TRAIN\",\"7453778\":\"SCORE_SC_1\",\"7453793\":\"SCORE_SC_2\"\}
 TRAINING_DATA=/data/data/dm-challenge-dcm/training
-SC1_SCORING_DATA=/TBD # TODO
-SC2_SCORING_DATA=/TBD # TODO
+SC1_SCORING_DATA=/data/data/dm-challenge-dcm/SC1_leaderboard
+SC2_SCORING_DATA=/data/data/dm-challenge-dcm/SC2_leaderboard
 MODEL_STATE=/data/model${AGENT_INDEX}
 TRAINING_SCRATCH=/data/scatch${AGENT_INDEX}
 TRAINING_EXAM_METADATA_MOUNT=/data/data/metadata/training_exams_metadata.tsv:/metadata/exams_metadata.tsv
 TRAINING_IMAGE_METADATA_MOUNT=/data/data/metadata/training_images_crosswalk.tsv:/metadata/images_crosswalk.tsv
-SC1_SCORING_IMAGE_METADATA_MOUNT=/data/data/scoring_images_crosswalk_substitute.tsv:/metadata/images_crosswalk.tsv # TODO
-SC2_SCORING_EXAM_METADATA_MOUNT=/data/data/scoring_exams_metadata_substitute.tsv:/metadata/exams_metadata.tsv # TODO
-SC2_SCORING_IMAGE_METADATA_MOUNT=/data/data/scoring_images_crosswalk_substitute.tsv:/metadata/images_crosswalk.tsv # TODO
+SC1_SCORING_IMAGE_METADATA_MOUNT=/data/data/metadata/SC1_leaderboard_images_crosswalk.tsv:/metadata/images_crosswalk.tsv
+SC2_SCORING_EXAM_METADATA_MOUNT=/data/data/metadata/SC2_leaderboard_exams_metadata.tsv:/metadata/exams_metadata.tsv
+SC2_SCORING_IMAGE_METADATA_MOUNT=/data/data/metadata/SC2_leaderboard_images_crosswalk.tsv:/metadata/images_crosswalk.tsv
 
 DOCKER_MACHINE_NAME=$(docker-machine active)
 echo DOCKER_MACHINE_NAME=${DOCKER_MACHINE_NAME}
