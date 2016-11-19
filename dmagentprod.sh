@@ -45,13 +45,13 @@ fi
 # this is a map from evaluation ID to role (train, score on sub-chall 1 or score on sub-chall 2)
 # It is OK to have multiple queues that map to the same role
 EVALUATION_ROLES=\{\"7213944\":\"TRAIN\",\"7453778\":\"SCORE_SC_1\",\"7453793\":\"SCORE_SC_2\"\}
-TRAINING_DATA=/data/data/substitute-dcm #TODO update with production data
+TRAINING_DATA=/data/data/dm-challenge-dcm/training
 SC1_SCORING_DATA=/TBD # TODO
 SC2_SCORING_DATA=/TBD # TODO
 MODEL_STATE=/data/model${AGENT_INDEX}
 TRAINING_SCRATCH=/data/scatch${AGENT_INDEX}
-TRAINING_EXAM_METADATA_MOUNT=/data/data/training_exams_metadata_substitute.tsv:/metadata/exams_metadata.tsv # TODO
-TRAINING_IMAGE_METADATA_MOUNT=/data/data/training_images_crosswalk_substitute.tsv:/metadata/images_crosswalk.tsv # TODO
+TRAINING_EXAM_METADATA_MOUNT=/data/data/metadata/training_exams_metadata.tsv:/metadata/exams_metadata.tsv
+TRAINING_IMAGE_METADATA_MOUNT=/data/data/metadata/training_images_crosswalk.tsv:/metadata/images_crosswalk.tsv
 SC1_SCORING_IMAGE_METADATA_MOUNT=/data/data/scoring_images_crosswalk_substitute.tsv:/metadata/images_crosswalk.tsv # TODO
 SC2_SCORING_EXAM_METADATA_MOUNT=/data/data/scoring_exams_metadata_substitute.tsv:/metadata/exams_metadata.tsv # TODO
 SC2_SCORING_IMAGE_METADATA_MOUNT=/data/data/scoring_images_crosswalk_substitute.tsv:/metadata/images_crosswalk.tsv # TODO
