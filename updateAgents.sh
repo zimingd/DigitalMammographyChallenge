@@ -63,22 +63,30 @@ updateMachine(){
 	eval $DOCKEREVAL
 
 
-	#TODO: 01 or 1?
 	#docker stop and remove container
 	local CONTAINER_ONE_NAME=$MACHINE_NAME-$ROLE-1
 	local CONTAINER_TWO_NAME=$MACHINE_NAME-$ROLE-2
 
-	docker stop $CONTAINER_ONE_NAME
-	checkForErrorExitCode $? "failed to stop container $CONTAINER_ONE_NAME"
+	#used to check if container exists
+	docker inspect --format="{{ .State.Running }}" $CONTAINER_ONE_NAME 2> /dev/null #Don't care about it's error message
+	#the previous command has a non-zero exit code if the container does not exist
+	if [ $? -eq 0 ]; then #container exists
+		docker stop $CONTAINER_ONE_NAME
+		checkForErrorExitCode $? "failed to stop container $CONTAINER_ONE_NAME"
 
-	docker rm $CONTAINER_ONE_NAME
-	checkForErrorExitCode $? "failed to remove container $CONTAINER_ONE_NAME"
+		docker rm $CONTAINER_ONE_NAME
+		checkForErrorExitCode $? "failed to remove container $CONTAINER_ONE_NAME"
+	fi
 
-	docker stop $CONTAINER_TWO_NAME
-	checkForErrorExitCode $? "failed to stop container $CONTAINER_TWO_NAME"
-	
-	docker rm $CONTAINER_TWO_NAME
-	checkForErrorExitCode $? "failed to remove container $CONTAINER_TWO_NAME"
+	#used to check if container exists
+	docker inspect --format="{{ .State.Running }}" $CONTAINER_TWO_NAME 2> /dev/null 
+	if [ $? -eq 0 ]; then #container exists
+		docker stop $CONTAINER_TWO_NAME
+		checkForErrorExitCode $? "failed to stop container $CONTAINER_TWO_NAME"
+		
+		docker rm $CONTAINER_TWO_NAME
+		checkForErrorExitCode $? "failed to remove container $CONTAINER_TWO_NAME"
+	fi
 
 	#pull latest image
 	docker pull brucehoff/challengedockeragent
@@ -87,10 +95,10 @@ updateMachine(){
 	#TODO: remove untagged images
 	#docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
 
-	#Run script to start the ageng
-	./dmagent-prod $ROLE 1
+	#Run script to start the agent
+	$SCRIPT_TO_RUN $ROLE 1
 	checkForErrorExitCode $? "script failed: '!!'"
-	./dmagent-prod $ROLE 2
+	$SCRIPT_TO_RUN $ROLE 2
 	checkForErrorExitCode $? "script failed: '!!'"
 
 	echo "Sucessfully updated: $MACHINE_NAME"
