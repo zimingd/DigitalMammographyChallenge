@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#TODO: check $# for correct # of args
 usage(){
 	echo "Usage:"
 	echo -e "\t$0 role scriptToRun machineNames"
