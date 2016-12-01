@@ -90,16 +90,16 @@ updateMachine(){
 
 	#Run script to start the ageng
 	./dmagent-prod $ROLE 1
-	checkForErrorExitCode $? "failed to run script: '!!'"
+	checkForErrorExitCode $? "script failed: '!!'"
 	./dmagent-prod $ROLE 2
-	checkForErrorExitCode $? "failed to run script: '!!'"
+	checkForErrorExitCode $? "script failed: '!!'"
 
 	echo "Sucessfully updated: $MACHINE_NAME"
 }
 
-# for MACHINE_NAME in $MACHINE_NAMES; do
-# 	updateMachine $MACHINE_NAME
-# done
+for MACHINE_NAME in $MACHINE_NAMES; do
+	updateMachine $MACHINE_NAME
+done
 
 echo "Reverting to local docker host."
 #revert to using local docker
